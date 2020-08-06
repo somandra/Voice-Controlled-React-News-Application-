@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect, createRef} from 'react';
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography,} from '@material-ui/core';
 import useStyles from './styles';
 import classnames from 'classnames';
@@ -6,9 +6,21 @@ import classnames from 'classnames';
 const NewsCard = ({ article:{ description, publishedAt, source, title, url, urlToImage } , i, activeArticle }) => {
     
     const classes = useStyles();
+    const [elRefs, setElRefs] = useState([]);
+    const scrollToRef = (ref) => window.scroll(0, ref.current.offsetTop - 50);
+
+    useEffect(()=>{
+        setElRefs((refs)=>Array(20).fill().map((_, j)=> refs[j] || createRef()))
+    },[]);
+
+    useEffect(()=>{
+        if(i === activeArticle && elRefs[activeArticle]){
+            scrollToRef(elRefs[activeArticle]);
+        }
+    },[i, activeArticle, elRefs])
 
     return (
-            <Card className={ classnames(classes.card, activeArticle === i? classes.activeCard: null)}>
+            <Card ref={elRefs[i]} className={ classnames(classes.card, activeArticle === i ? classes.activeCard : null)}>
                 <CardActionArea href={url} target='_blank'>
                     <CardMedia className={classes.media} image={urlToImage || 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRjCAfVgATBaPFFWX2WWJF6x-gVW4P1mdvfKA&usqp=CAU'} />
                     <div className={classes.details}>
