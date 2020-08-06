@@ -1,3 +1,5 @@
+# Featsel 
+[![version](https://img.shields.io/badge/version-1.0.1-red.svg)](https://github.com/somandra/Voice-Controlled-React-News-Application-/)
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
